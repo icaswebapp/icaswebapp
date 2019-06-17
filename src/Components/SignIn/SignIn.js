@@ -32,7 +32,8 @@ const INITIAL_STATE = {
       await console.log("LOGIN SUCCESSFUL.");
       await props.history.replace(HOME);
     } catch(error) {
-      alert(error.message)
+      console.log(error.message);
+      alert(error.message);
     }
   }
 

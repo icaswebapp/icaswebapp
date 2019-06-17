@@ -1,6 +1,7 @@
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
+import 'firebase/storage';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAUxhNDDFHci8BbLhzPlQjSodclyiS6Ovo",
@@ -14,9 +15,10 @@ var firebaseConfig = {
   // Initialize Firebase
   class Firebase {
 	constructor() {
-		app.initializeApp(firebaseConfig);
-		this.auth = app.auth();
-		this.db = app.firestore();
+		firebase.initializeApp(firebaseConfig);
+		this.auth = firebase.auth();
+		this.db = firebase.firestore();
+		this.storage = firebase.storage();
 	}
 
 	login(email, password) {
@@ -46,6 +48,10 @@ var firebaseConfig = {
 
 	getCurrentUsername() {
 		return this.auth.currentUser && this.auth.currentUser.displayName
+	}
+
+	getStorage(){
+		return this.storage;
 	}
 
 }

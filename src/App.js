@@ -30,6 +30,7 @@ function App() {
   },[authUser , setAuthUser])
   return firebase.isInitialized ?  (
     <Router>
+      <div className="app">
         <header>
             <Navbar authUser={authUser}/>
         </header> 
@@ -42,6 +43,7 @@ function App() {
           <Route exact path={FEED}    component={Feed}   authUser={authUser}/>
           <Route exact path={FORUM}   component={Forums} authUser={authUser}/>
         </Switch>
+      </div>
    </Router>
    ) : (<div className='loader'></div>)
 }

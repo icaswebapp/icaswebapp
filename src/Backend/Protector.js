@@ -8,7 +8,7 @@ const protectedScreen = (Comp) => class ProtectedScreen extends Component{
             <FirebaseAuthContext.Consumer>
                 {
                     ({isUserSignedIn}) => {
-                        if (isUserSignedIn) {
+                        if (!!isUserSignedIn) {
                             return <Comp/>
                         }
                         alert('ACCESS DENIED. LOGIN OR REGISTER FIRST.');

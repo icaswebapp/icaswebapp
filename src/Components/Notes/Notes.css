@@ -1,0 +1,19 @@
+.notes {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background-color: aqua;
+  justify-content: center;
+  align-content: center;
+  align-items : center;
+  height: 80vh;
+
+}
+
+#uploader{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50%;
+
+}
