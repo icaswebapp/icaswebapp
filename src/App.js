@@ -26,15 +26,14 @@ function App() {
             <Navbar />
         </header> 
         <Switch>
-          <Route exact path={ABOUT}   component={About} />
-          <Route exact path={SIGN_IN} component={SignIn} />
-          <Route exact path={SIGN_UP} component={SignUp} />
-          <Route exact path={HOME}    component={Home}    />
-          <Route exact path={NOTESUPLOAD} component={NotesUpload}   />
-          <Route exact path={FEED}    component={Feed}   />
-          <Route exact path={FORUM}   component={Forums} />
-          <Route exact path={NOTES}   component={NotesView}   />
-
+          <Route exact path={ABOUT}       component={About} />
+          <Route exact path={SIGN_IN}     component={SignIn} />
+          <Route exact path={SIGN_UP}     component={SignUp} />
+          <Route exact path={HOME}        component={Home} />
+          <Route exact path={NOTESUPLOAD} component={NotesUpload}/>
+          <Route exact path={FEED}        component={Feed} />
+          <Route exact path={FORUM}       component={Forums} />
+          <Route exact path={NOTES}       component={NotesView}/>
         </Switch>
       </div>
    </Router>

@@ -13,20 +13,27 @@ const NotesUpload = (props) => {
     function preventDefaults (e) {
         e.preventDefault();
         e.stopPropagation();
+        return false;
     } 
     const handleDragEnter = e => {
         setAreaStyle('highlight');
         preventDefaults (e);
+        return false;
+
 
     }
     const handleDragLeave = e => {
         setAreaStyle('highlight')   
         preventDefaults (e) 
+        return false;
+
 
     }
     const handleDragOver = e => {
         setAreaStyle('highlight')
         preventDefaults (e)
+        return false;
+
 
     }
     const handleDrop = e => {
@@ -35,11 +42,11 @@ const NotesUpload = (props) => {
         let files = dt.files
 
         handleFiles(files)     
+        return false;
     }
 
     const handleFiles = (files) => {
         ([...files]).forEach(uploadFile);
-        
     }
 
     function uploadFile(file) {
@@ -60,7 +67,7 @@ const NotesUpload = (props) => {
         console.log('Upload is ' + progress + '% done');
         }, function(error) {
         // Handle unsuccessful uploads
-        console.log('ERROR ON UPLOADTASK',error);
+        console.log('ERROR ON UPLOAD TASK',error);
         }, function() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
@@ -76,8 +83,7 @@ const NotesUpload = (props) => {
                        .doc("URLS")
                        .set({[fileName] : downloadURL} , {merge : true})
                        .then(() => console.log("FIRESTORE UPLOAD SUCCESSFULL."))
-
-        });
+            });
         });
     }
 
@@ -89,14 +95,14 @@ const NotesUpload = (props) => {
                  onDragLeave={handleDragLeave}
                  onDrop={handleDrop}
                  className={areaStyle}
-                >
-            <form className="my-form">
-                <p className="f1 fw9 black strong">Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
-                <input type="file" id="fileElem" multiple onClick={(e) =>{ e.preventDefault();
-                    handleFiles(e.target.files)}} />
-                <label className="button" htmlFor="fileElem">Select some files</label>
-            </form>
-        </div>
+            >
+                <form className="my-form">
+                    <p className="f1 fw9 black strong">Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+                    <input type="file" id="fileElem" multiple 
+                    onClick={(e) => {handleFiles(e.target.files)}} />
+                    <label className="button" htmlFor="fileElem">Select some files</label>
+                </form>
+            </div>
         </div>
     )
 }
