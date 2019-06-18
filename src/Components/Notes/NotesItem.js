@@ -1,23 +1,18 @@
 import React from 'react';
-import firebase from '../../Backend/Firebase';
 
-function NotesItem({name}) {
+function NotesItem({name , url , position}) {
+
     const handleClick = (event) => {
-        console.log(name);
-        var docRef = firebase.getFirestore().collection("ACADEMIC NOTES").doc("URLS");
+        console.log('URL NAME' , name);
+        console.log('DOWNLOAD URL',url);
+        console.log('POSITION URL',position);
+        openInNewTab(url);
+    }
 
-        docRef.get().then(function(doc) {
-            if (doc.exists) {       
-
-                console.log("Document data:", doc.data());
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
-            }
+    function openInNewTab(url) {
+        var win = window.open(url, '_blank');
+        win.focus();
+      }
 
     return (
                 <article className="mw8 center br2 ba b--light-blue bg-lightest-blue">

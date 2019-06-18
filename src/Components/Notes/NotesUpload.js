@@ -6,36 +6,33 @@ import protectedScreen from '../../Backend/Protector';
 
 const NotesUpload = (props) => {
 
-    //const [uploadPercentage , setUploadPercentage ] = useState('0%');
-    //const [pStatus, setPStatus] = useState(null);
+    const [uploadPercentage , setUploadPercentage ] = useState('0%');
+    const [pStatus, setPStatus] = useState(null);
     const [areaStyle, setAreaStyle] = useState(null);
-   
     function preventDefaults (e) {
         e.preventDefault();
         e.stopPropagation();
         return false;
-    } 
+    }   
+
     const handleDragEnter = e => {
         setAreaStyle('highlight');
         preventDefaults (e);
         return false;
-
-
     }
+
     const handleDragLeave = e => {
         setAreaStyle('highlight')   
         preventDefaults (e) 
         return false;
-
-
     }
+
     const handleDragOver = e => {
         setAreaStyle('highlight')
         preventDefaults (e)
         return false;
-
-
     }
+
     const handleDrop = e => {
         setAreaStyle('highlight');
         let dt = e.dataTransfer
@@ -48,6 +45,8 @@ const NotesUpload = (props) => {
     const handleFiles = (files) => {
         ([...files]).forEach(uploadFile);
     }
+
+    
 
     function uploadFile(file) {
         console.log('UPLOAD FILE:', file.name);
@@ -63,47 +62,49 @@ const NotesUpload = (props) => {
         uploadTask.on('state_changed', function(snapshot){
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setUploadPercentage(progress)
+            setPStatus('Upload is ' + progress + '% done');
+
         }, function(error) {
         // Handle unsuccessful uploads
-        console.log('ERROR ON UPLOAD TASK',error);
+            console.log('ERROR ON UPLOAD TASK',error);
         }, function() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log('File available at', downloadURL);
 
             var fileName = "";
-
-           fileName = file.name;
+            fileName = file.name;
 
             firebase.getFirestore()
                        .collection("ACADEMIC NOTES")
                        .doc("URLS")
                        .set({[fileName] : downloadURL} , {merge : true})
-                       .then(() => console.log("FIRESTORE UPLOAD SUCCESSFULL."))
+                       .then(() => setPStatus(" UPLOAD SUCCESSFULL -> "+file.name));
             });
         });
     }
 
     return ( 
-        <div className="notes">
-            <div id="drop-area"
-                 onDragEnter={handleDragEnter} 
-                 onDragOver={handleDragOver} 
-                 onDragLeave={handleDragLeave}
-                 onDrop={handleDrop}
-                 className={areaStyle}
-            >
-                <form className="my-form">
-                    <p className="f1 fw9 black strong">Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
-                    <input type="file" id="fileElem" multiple 
-                    onClick={(e) => {handleFiles(e.target.files)}} />
-                    <label className="button" htmlFor="fileElem">Select some files</label>
-                </form>
+            <div className="notes">
+                <div id="drop-area"
+                    onDragEnter={handleDragEnter} 
+                    onDragOver={handleDragOver} 
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={areaStyle}>
+                    <form className="my-form">
+                        <p className="f1 fw9 black strong">Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+                        <input type="file" id="fileElem" multiple 
+                        onClick={(e) => {handleFiles(e.target.files)}}/>
+                        <label className="button" htmlFor="fileElem">Select some files</label>
+                        <p className="f1 fw9 black strong">{uploadPercentage}</p>
+                        <p className="f1 fw9 black strong">{pStatus}</p>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
+        )
 }
 export default protectedScreen(NotesUpload);
