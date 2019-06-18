@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import './NotesUpload.css';
+import './Notes.css';
 import firebase from '../../Backend/Firebase';
 import protectedScreen from '../../Backend/Protector';
 

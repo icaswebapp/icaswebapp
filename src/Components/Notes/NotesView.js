@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import protectedScreen from '../../Backend/Protector';
 import firebase from '../../Backend/Firebase';
+import NotesItem from './NotesItem';
 
 const NotesView = (props) => {
 
@@ -9,9 +10,7 @@ const NotesView = (props) => {
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
-            console.log('KEYS' , Object.keys(doc.data()));
-            setnotesCards( Object.keys(doc.data()).map((key) => <p className="f1 tc f6 fw9 pointer">{key}</p>));
+            setnotesCards( Object.keys(doc.data()).map((key , index) => <NotesItem key={index} name={key} position={index}/>));
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
