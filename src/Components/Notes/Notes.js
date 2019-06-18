@@ -6,48 +6,97 @@ import protectedScreen from '../../Backend/Protector';
 
 const Notes = (props) => {
 
-    const [uploadPercentage , setUploadPercentage ] = useState('0%');
-    const [pStatus, setPStatus] = useState(null);
+    //const [uploadPercentage , setUploadPercentage ] = useState('0%');
+    //const [pStatus, setPStatus] = useState(null);
+    const [areaStyle, setAreaStyle] = useState(null);
+   
+    function preventDefaults (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    } 
+    const handleDragEnter = e => {
+        setAreaStyle('highlight');
+        preventDefaults (e);
 
-    const handleChange = event => {
-        try{
-        //  GET A FILE
-        var file = event.target.files[0];
-        //  CREATE A STORAGE REFERENCE (Firebase.storage.ref(FOLDER_NAME , FILE_NAME))
-        var StorageReference = firebase.getStorage().ref('academic_notes/' + file.name);
-
-
-        //  UPLOAD FILE
-        var task = StorageReference.put(file);
-        //  UPDATE PROGRESS BAR.
-        task.on('state_changed' , 
-            function progress(snapshot){
-                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
-                setUploadPercentage(percentage);
-                setPStatus("UPLOADING...");
-            },
-            function error(err){
-                console.log(err);
-                setPStatus("SOMETHING WENT WRONG.RETRY?");
-            },
-            function complete(){
-                console.log('TRANSFER COMPLETED.');
-                setPStatus("COMPLETED.");
-
-            }
-        )
-    }catch(e){
-        console.log(e);
     }
-}
+    const handleDragLeave = e => {
+        setAreaStyle('highlight')   
+        preventDefaults (e) 
+
+    }
+    const handleDragOver = e => {
+        setAreaStyle('highlight')
+        preventDefaults (e)
+
+    }
+    const handleDrop = e => {
+        setAreaStyle('highlight');
+        let dt = e.dataTransfer
+        let files = dt.files
+
+        handleFiles(files)     
+    }
+
+    const handleFiles = (files) => {
+        ([...files]).forEach(uploadFile);
+        
+    }
+
+    function uploadFile(file) {
+        console.log('UPLOAD FILE:', file.name);
+
+        var storageRef = firebase.getStorage().ref('ACADEMICS/'+ file.name);
+
+        var uploadTask = storageRef.put(file);
+
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', function(snapshot){
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        }, function(error) {
+        // Handle unsuccessful uploads
+        console.log('ERROR ON UPLOADTASK',error);
+        }, function() {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            console.log('File available at', downloadURL);
+
+            var fileName = "";
+
+           fileName = file.name;
+
+            firebase.getFirestore()
+                       .collection("ACADEMIC NOTES")
+                       .doc("URLS")
+                       .set({[fileName] : downloadURL} , {merge : true})
+                       .then(() => console.log("FIRESTORE UPLOAD SUCCESSFULL."))
+
+        });
+        });
+    }
 
     return ( 
         <div className="notes">
-            <h1 className="f1 tc fw9 underline">NOTES</h1>
-            <p className="f1 tc black underline">UPLOADING:{uploadPercentage}</p>
-            <p className="f1 tc black underline">{pStatus}</p>
-            <progress id="uploader" value={`${uploadPercentage}`} max="100">0%</progress>
-            <input type="file" id="fileButton" onChange={handleChange}/>
+            <div id="drop-area"
+                 onDragEnter={handleDragEnter} 
+                 onDragOver={handleDragOver} 
+                 onDragLeave={handleDragLeave}
+                 onDrop={handleDrop}
+                 className={areaStyle}
+                >
+            <form className="my-form">
+                <p className="f1 fw9 black strong">Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+                <input type="file" id="fileElem" multiple onClick={(e) =>{ e.preventDefault();
+                    handleFiles(e.target.files)}} />
+                <label className="button" htmlFor="fileElem">Select some files</label>
+            </form>
+        </div>
         </div>
     )
 }

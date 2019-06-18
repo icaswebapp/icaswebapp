@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firebase-firestore';
 import 'firebase/storage';
+import 'firebase/firestore';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAUxhNDDFHci8BbLhzPlQjSodclyiS6Ovo",
@@ -52,6 +52,10 @@ var firebaseConfig = {
 
 	getStorage(){
 		return this.storage;
+	}
+
+	getFirestore(){
+		return this.db;
 	}
 
 }
