@@ -22,6 +22,7 @@ export default class FirebaseAuthProvider extends Component {
 
     render(){
         const {authStatusReported, isUserSignedIn} = this.state;
+        console.log('CONTEXT API: USER STATUS -> ' , isUserSignedIn , authStatusReported)
         return (
             <FirebaseAuthContext.Provider value={{isUserSignedIn, authStatusReported}}>
                 {this.props.children}

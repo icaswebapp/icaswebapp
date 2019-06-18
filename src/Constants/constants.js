@@ -5,7 +5,8 @@ export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
-export const NOTES = '/notes';
+export const NOTES = '/notes'
+export const NOTESUPLOAD = '/upload';
 export const FEED = '/feed';
 export const FORUM = '/forum';
 

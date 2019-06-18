@@ -8,12 +8,15 @@ const protectedScreen = (Comp) => class ProtectedScreen extends Component{
             <FirebaseAuthContext.Consumer>
                 {
                     ({isUserSignedIn}) => {
-                        if (!!isUserSignedIn) {
-                            return <Comp/>
+                        if (isUserSignedIn) {
+                            console.log('STATUS - > TRUE -> ',isUserSignedIn)
+                            return (<Comp/>)
+                        }else{
+                         console.log('USER SIGNED IN -> FALSE',isUserSignedIn);
+                         alert('YOU CANNOT ACCESS THE URL DIRECTLY. YOU SHOULD HAVE ADMIN RIGHTS/BW LOGGED IN.');
+                         this.props.history.replace(ABOUT);
+                         return null;
                         }
-                        alert('ACCESS DENIED. LOGIN OR REGISTER FIRST.');
-                        this.props.history.replace(ABOUT);
-                        return null;
                     }
                 }
             </FirebaseAuthContext.Consumer>

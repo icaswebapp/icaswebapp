@@ -1,10 +1,10 @@
 import React,{useState} from 'react'
-import './Notes.css';
+import './NotesUpload.css';
 import firebase from '../../Backend/Firebase';
 import protectedScreen from '../../Backend/Protector';
 
 
-const Notes = (props) => {
+const NotesUpload = (props) => {
 
     //const [uploadPercentage , setUploadPercentage ] = useState('0%');
     //const [pStatus, setPStatus] = useState(null);
@@ -100,4 +100,4 @@ const Notes = (props) => {
         </div>
     )
 }
-export default protectedScreen(Notes);
+export default protectedScreen(NotesUpload);
