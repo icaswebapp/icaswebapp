@@ -13,12 +13,11 @@ import Feed from './Components/Feed/Feed';
 import Forums from './Components/Forums/Forums';
 import NotesView from './Components/Notes/NotesView';
 import NotesUpload from './Components/Notes/NotesUpload';
+import NotFound from './Components/404/NotFound';
 
 
 function App() {
 
-  
-  
   return firebase.isInitialized ?  (
     <Router>
       <div className="app">
@@ -34,6 +33,7 @@ function App() {
           <Route exact path={FEED}        component={Feed}/>
           <Route exact path={FORUM}       component={Forums}/>
           <Route exact path={NOTES}       component={NotesView}/>
+          <Route path='*' exact={true} component={NotFound} />
         </Switch>
       </div>
    </Router>
