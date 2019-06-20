@@ -10,12 +10,8 @@ const NotesView = (props) => {
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-<<<<<<< HEAD
-            setnotesCards( Object.entries(doc.data()).map(([key ,value] ,index) => <NotesItem key={index} name={key} position={index} url={value}/>));
-=======
             setnotesCards( 
                 Object.keys(doc.data()).map((key , index) => <NotesItem key={index} name={key} position={index}/>));
->>>>>>> testing-forum
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
