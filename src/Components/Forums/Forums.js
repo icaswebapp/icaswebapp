@@ -1,46 +1,19 @@
 import React, { useState } from 'react';
 import protectedScreen from '../../Backend/Protector';
-import firebase from '../../Backend/Firebase';
-var ForumsItem = require('./ForumsItem').default
+import displayCollection from './Helper/Display/displayCollection'
+import ForumsItem from './Helper/Display/ForumsItem'
+var getCollection = require('./Helper/logic').default.getCollection
 
 const Forums = (props) => {
-    const [forumsCards, setforumsCards] = useState(null);
+    const [state, setstate] = useState(null)
 
-    // get all the documents in the collection
-    async function getCollection() {
-        const markers = [];
-        await firebase.getFirestore().collection('Posts').get()
-            .then(querySnapshot => {
-                querySnapshot.docs.forEach(doc => {
-                    markers.push(doc.data());
-                });
-            });
-        return markers;
-    }
-
-    getCollection().then(function (collection) {
-        setforumsCards(
-            collection.map((forumObject, index) => {
-                return <ForumsItem 
-                    key={index} 
-                    object={forumObject} 
-                    position={index}
-                />
-            })
-        )
-
-        console.log(collection)
-        collection.forEach(doc => {
-            return doc.map
-        })
-    }).catch(function (error) {
-        console.log("Error getting collection:", error);
-    });
+    getCollection('Posts')
+        .then(collection => setstate(displayCollection(collection, ForumsItem)))
 
     return (
         <div>
             <h1 className="f1 tc black underline fw9">FORUMS</h1>
-            {forumsCards}
+            {state}<br />
         </div>
     )
 }
