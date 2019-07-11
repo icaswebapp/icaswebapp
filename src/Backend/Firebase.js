@@ -4,16 +4,16 @@ import 'firebase/storage';
 import 'firebase/firestore';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyAUxhNDDFHci8BbLhzPlQjSodclyiS6Ovo",
-    authDomain: "icas-phase-1.firebaseapp.com",
-    databaseURL: "https://icas-phase-1.firebaseio.com",
-    projectId: "icas-phase-1",
-    storageBucket: "icas-phase-1.appspot.com",
-    messagingSenderId: "923279483711",
-    appId: "1:923279483711:web:f7ad3752a5528a0c"
-  };
-  // Initialize Firebase
-  class Firebase {
+	apiKey: "AIzaSyAUxhNDDFHci8BbLhzPlQjSodclyiS6Ovo",
+	authDomain: "icas-phase-1.firebaseapp.com",
+	databaseURL: "https://icas-phase-1.firebaseio.com",
+	projectId: "icas-phase-1",
+	storageBucket: "icas-phase-1.appspot.com",
+	messagingSenderId: "923279483711",
+	appId: "1:923279483711:web:f7ad3752a5528a0c"
+};
+// Initialize Firebase
+class Firebase {
 	constructor() {
 		firebase.initializeApp(firebaseConfig);
 		this.auth = firebase.auth();
@@ -42,7 +42,7 @@ var firebaseConfig = {
 		})
 	}
 
-	getCurrentUser(){
+	getCurrentUser() {
 		return this.auth().currentUser
 	}
 
@@ -50,11 +50,11 @@ var firebaseConfig = {
 		return this.auth.currentUser && this.auth.currentUser.displayName
 	}
 
-	getStorage(){
+	getStorage() {
 		return this.storage;
 	}
 
-	getFirestore(){
+	getFirestore() {
 		return this.db;
 	}
 
