@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/storage';
-import 'firebase/firestore';
+const firebase = require('firebase/app')
+require('firebase/auth')
+require('firebase/storage')
+require('firebase/firestore')
 
 var firebaseConfig = {
 	apiKey: "AIzaSyAUxhNDDFHci8BbLhzPlQjSodclyiS6Ovo",
@@ -60,4 +60,4 @@ class Firebase {
 
 }
 
-export default new Firebase();
+module.exports = new Firebase()
