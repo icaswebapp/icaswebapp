@@ -12,8 +12,7 @@ const Navbar = (props) => {
       return(
         <nav className="flex justify-end bb b--white-10 bg-black ">
           <div className="flex-grow pa3 flex items-center">
-            {/* {isUserSignedIn? <SignedInLinks/> : <SignedOutLinks/>} */}
-            <SignedInLinks/>
+            {isUserSignedIn? <SignedInLinks/> : <SignedOutLinks/>}
           </div>
         </nav>)
     }

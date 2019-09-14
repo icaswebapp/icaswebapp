@@ -28,4 +28,4 @@ const NotesView = (props) => {
     )
 }
 
-export default protectedScreen(NotesView);
+export default NotesView;

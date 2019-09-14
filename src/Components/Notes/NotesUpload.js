@@ -7,7 +7,7 @@ import { NOTESREF } from '../../Constants/constants';
 
 const NotesUpload = (props) => {
 
-    const [uploadPercentage , setUploadPercentage ] = useState('0%');
+    const [uploadPercentage, setUploadPercentage] = useState('0%');
     const [pStatus, setPStatus] = useState(null);
     const [areaStyle, setAreaStyle] = useState(null);
 
@@ -18,19 +18,16 @@ const NotesUpload = (props) => {
     const handleDragEnter = e => {
         setAreaStyle('highlight');
         preventDefaults(e);
-
     }
 
     const handleDragLeave = e => {
         setAreaStyle('highlight')
         preventDefaults(e)
-
     }
 
     const handleDragOver = e => {
         setAreaStyle('highlight')
         preventDefaults(e)
-
     }
 
     const handleDrop = e => {
@@ -45,13 +42,13 @@ const NotesUpload = (props) => {
         ([...files]).forEach(uploadFile);
     }
 
-    
+
 
     function uploadFile(file) {
         console.log('UPLOAD FILE:', file.name);
 
-        var storageRef = firebase.getStorage().ref(NOTESREF + file.name);
-
+        var storageRef = firebase.getStorage().ref(NOTESREF //+ file.name
+            );
         var uploadTask = storageRef.put(file);
 
         // Register three observers:
@@ -77,7 +74,7 @@ const NotesUpload = (props) => {
                 fileName = file.name;
 
                 firebase.getFirestore()
-                    .collection("ACADEMIC NOTES")
+                    .collection(NOTESREF)
                     .doc("URLS")
                     .set({ [fileName]: downloadURL }, { merge: true })
                     .then(() => console.log("FIRESTORE UPLOAD SUCCESSFULL."))
