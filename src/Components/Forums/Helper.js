@@ -5,4 +5,9 @@ async function getCollection(collectionName) {
     return snapshot.docs.map(doc => doc);
 }
 
-module.exports = { getCollection }
+async function getCollectionData(collectionName) {
+    const snapshot = await firebase.getFirestore().collection(collectionName).get()
+    return snapshot.docs.map(doc => doc.data());
+}
+
+module.exports = { getCollection, getCollectionData }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './Notes.css';
 import firebase from '../../Backend/Firebase';
 import protectedScreen from '../../Backend/Protector';
+import { NOTESREF } from '../../Constants/constants';
 
 
 const NotesUpload = (props) => {
@@ -49,7 +50,7 @@ const NotesUpload = (props) => {
     function uploadFile(file) {
         console.log('UPLOAD FILE:', file.name);
 
-        var storageRef = firebase.getStorage().ref('ACADEMICS/' + file.name);
+        var storageRef = firebase.getStorage().ref(NOTESREF + file.name);
 
         var uploadTask = storageRef.put(file);
 

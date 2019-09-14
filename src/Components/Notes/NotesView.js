@@ -1,24 +1,29 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import protectedScreen from '../../Backend/Protector';
 import firebase from '../../Backend/Firebase';
 import NotesItem from './NotesItem';
+import { NOTESREF } from '../../Constants/constants';
+import Helper from '../Forums/Helper'
 
 const NotesView = (props) => {
 
-    var docRef = firebase.getFirestore().collection("ACADEMIC NOTES").doc("URLS");
-    const [notesCards, setnotesCards] = useState(null);
-
-    docRef.get().then(function(doc) {
-        if (doc.exists) {
-            setnotesCards( 
-                Object.keys(doc.data()).map((key , index) => <NotesItem key={index} name={key} position={index}/>));
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+    useEffect(() => {
+        async function fetchData() {
+            // You can await here
+            const colRef = await Helper.getCollectionData(NOTESREF)
+            // ...
+            colRef.forEach(doc => {
+                console.log(doc)
+                setnotesCards(
+                    Object.keys(doc).map((key, index) => <NotesItem key={index} name={key} position={index} url={doc.downloadURL}/>));
+            })
         }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
+        fetchData();
+    }, []);
+
+    // var colRef = Helper.getCollection(NOTESREF)
+    var docRef = firebase.getFirestore().collection(NOTESREF).doc("URLS");
+    const [notesCards, setnotesCards] = useState(null);
 
     return (
         <div>

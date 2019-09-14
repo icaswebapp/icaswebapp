@@ -10,4 +10,5 @@ export const NOTESUPLOAD = '/upload';
 export const FEED = '/feed';
 export const FORUM = '/forum';
 
-
+// FIREBASE DATABASE REFS AND PATHS
+export const NOTESREF = 'NOTES/'

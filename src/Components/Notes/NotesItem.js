@@ -12,7 +12,7 @@ function NotesItem({name , url , position}) {
     function openInNewTab(url) {
         var win = window.open(url, '_blank');
         win.focus();
-      }
+    }
 
     return (
                 <article className="mw8 center br2 ba b--black bg-grey">
